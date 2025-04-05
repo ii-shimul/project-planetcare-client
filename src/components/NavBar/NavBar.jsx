@@ -1,14 +1,12 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Button } from "antd";
 const links = (
 	<>
 		<li>
 			<NavLink
 				to="/"
-				className={({ isActive }) =>
-					`flex py-2 text-base font-medium text-secondary hover:text-primary lg:ml-12 lg:inline-flex ${
-						isActive ? "text-2xl" : ""
-					}`
+				className={
+					"py-2 px-2.5 text-base font-medium hover:text-primary"
 				}
 			>
 				Home
@@ -17,10 +15,8 @@ const links = (
 		<li>
 			<NavLink
 				to="/events"
-				className={({ isActive }) =>
-					`flex py-2 text-base font-medium text-secondary hover:text-primary lg:ml-12 lg:inline-flex ${
-						isActive ? "text-2xl" : ""
-					}`
+				className={
+					"py-2 px-2.5 text-base font-medium hover:text-primary"
 				}
 			>
 				Events
@@ -29,10 +25,8 @@ const links = (
 		<li>
 			<NavLink
 				to="/donate"
-				className={({ isActive }) =>
-					`flex py-2 text-base font-medium text-secondary hover:text-primary lg:ml-12 lg:inline-flex ${
-						isActive ? "text-2xl" : ""
-					}`
+				className={
+					"py-2 px-2.5 text-base font-medium hover:text-primary"
 				}
 			>
 				Donate
@@ -49,18 +43,20 @@ const NavBar = () => {
 				</h1>
 			</div>
 			<div>
-				<ul className="flex items-center gap-5 md:text-lg">
-					{links}
-				</ul>
+				<ul className="flex items-center gap-7 md:text-lg">{links}</ul>
 			</div>
 			<div className="flex gap-2">
-				<Button>Login</Button>
-				<Button
-					type="primary"
-					style={{ backgroundColor: "#21764C", borderColor: "#21764C" }}
-				>
-					Signup
-				</Button>
+				<Link to={"/login"}>
+					<Button>Login</Button>
+				</Link>
+				<Link to={"/signup"}>
+					<Button
+						type="primary"
+						style={{ backgroundColor: "#21764C", borderColor: "#21764C" }}
+					>
+						Signup
+					</Button>
+				</Link>
 			</div>
 		</nav>
 	);

@@ -7,3 +7,11 @@
   --color-active: #007BFF;
   --color-secondaryBG: #D6EFFF;
 }
+
+
+.active {
+  color: #21764C;
+  background: #D6EFFF;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}

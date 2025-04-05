@@ -8,7 +8,7 @@ const Footer = () => {
 					<h4 className="font-semibold text-lg">PlanetCare</h4>
 					<p className="mt-2 text-sm">Together for a greener future.</p>
 				</div>
-				<div>
+				<div className='max-sm:hidden'>
 					<h4 className="font-semibold text-lg">Quick Links</h4>
 					<ul className="mt-2 space-y-1 text-sm">
 						<li>
