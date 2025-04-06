@@ -1,14 +1,44 @@
 import React from "react";
-import { Form, Input, Button, Checkbox, Typography, Card, Divider } from "antd";
+import {
+	Form,
+	Input,
+	Button,
+	Checkbox,
+	Typography,
+	Card,
+	Divider,
+	message,
+} from "antd";
 import { UserOutlined, LockOutlined, GoogleOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import useAxios from "../../hooks/useAxios";
 
 const { Title } = Typography;
 
 const Login = () => {
+	const { logInGoogle } = useAuth();
+	const axiosPublic = useAxios();
+	const navigate = useNavigate();
 	const onFinish = (values) => {
 		console.log("Received values:", values);
 		// Handle login logic here (e.g., API call)
+	};
+
+	// handle sign up with google
+	const handleGoogleLogIn = async () => {
+		const res = await logInGoogle();
+		const user = res.user;
+		const userDb = {
+			name: user.displayName,
+			email: user.email,
+			role: "donor",
+			createdAt: new Date().toISOString(),
+		};
+		await axiosPublic.post("/users", userDb);
+		alert(`Welcome ${user.displayName}`);
+		message.success(`Welcome ${user.displayName}`);
+		navigate("/");
 	};
 
 	return (
@@ -82,7 +112,7 @@ const Login = () => {
 				<Button
 					size="large"
 					block
-					// onClick={onGoogleLogin}
+					onClick={handleGoogleLogIn}
 					style={{
 						marginBottom: "24px",
 						display: "flex",

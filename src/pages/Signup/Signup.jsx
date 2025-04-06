@@ -1,14 +1,64 @@
 import React from "react";
-import { Form, Input, Button, Typography, Card, Divider } from "antd";
-import { UserOutlined, MailOutlined, LockOutlined, GoogleOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import {
+	Form,
+	Input,
+	Button,
+	Typography,
+	Card,
+	Divider,
+	Select,
+	message,
+} from "antd";
+import {
+	UserOutlined,
+	MailOutlined,
+	LockOutlined,
+	GoogleOutlined,
+	EditOutlined,
+} from "@ant-design/icons";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import useAxios from "../../hooks/useAxios";
 
 const { Title } = Typography;
 
 const Signup = () => {
-	const onFinish = (values) => {
-		console.log("Received values:", values);
-		// Handle signup logic here (e.g., API call)
+	const { createUser, logInGoogle } = useAuth();
+	const axiosPublic = useAxios();
+	const navigate = useNavigate();
+
+	// handle sign up
+	const onFinish = async (data) => {
+		const user = await createUser(data.email, data.password, data.name);
+		if (user?.email) {
+			message.success(`Welcome ${user.displayName}`);
+			const userDb = {
+				name: user.displayName,
+				email: user.email,
+				role: data.role,
+				createdAt: new Date().toISOString(),
+			};
+			await axiosPublic.post("/users", userDb);
+			navigate("/");
+		} else {
+			alert();
+			message.error("Oops! Something went wrong.");
+		}
+	};
+
+	// handle sign up with google
+	const handleGoogleLogIn = async () => {
+		const res = await logInGoogle();
+		const user = res.user;
+		const userDb = {
+			name: user.displayName,
+			email: user.email,
+			role: "Donor",
+			createdAt: new Date().toISOString(),
+		};
+		await axiosPublic.post("/users", userDb);
+		alert(`Welcome ${user.displayName}`);
+		navigate("/");
 	};
 
 	return (
@@ -24,7 +74,7 @@ const Signup = () => {
 				</div>
 				<Form name="signup_form" onFinish={onFinish} layout="vertical">
 					<Form.Item
-						name="fullname"
+						name="name"
 						rules={[
 							{ required: true, message: "Please input your full name!" },
 						]}
@@ -44,6 +94,22 @@ const Signup = () => {
 						]}
 					>
 						<Input prefix={<MailOutlined />} placeholder="Email" size="large" />
+					</Form.Item>
+
+					<Form.Item
+						name="role"
+						rules={[{ required: true, message: "Please select your role!" }]}
+					>
+						<Select
+							prefix={<EditOutlined />}
+							allowClear
+							size="large"
+							options={[
+								{ value: "Donor", label: "Donor" },
+								{ value: "Volunteer", label: "Volunteer" },
+							]}
+							placeholder="Select your role"
+						/>
 					</Form.Item>
 
 					<Form.Item
@@ -99,11 +165,11 @@ const Signup = () => {
 						<Link to={"/login"}>Log in</Link>
 					</div>
 				</Form>
-        <Divider plain>or</Divider>
+				<Divider plain>or</Divider>
 				<Button
 					size="large"
 					block
-					// onClick={onGoogleLogin}
+					onClick={handleGoogleLogIn}
 					style={{
 						marginBottom: "24px",
 						display: "flex",
@@ -119,7 +185,6 @@ const Signup = () => {
 					/>
 					Sign up with Google
 				</Button>
-
 			</Card>
 		</div>
 	);

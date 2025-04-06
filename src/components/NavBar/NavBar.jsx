@@ -1,5 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
-import { Button } from "antd";
+import { Avatar, Dropdown, Menu, Space, Button } from "antd";
+import useAuth from "../../hooks/useAuth"
+import {
+	UserOutlined,
+	DashboardOutlined,
+	LogoutOutlined,
+} from "@ant-design/icons";
 const links = (
 	<>
 		<li>
@@ -34,7 +40,39 @@ const links = (
 		</li>
 	</>
 );
+
 const NavBar = () => {
+	const {user, logOut} = useAuth();
+	const menu = (
+		<Menu
+			items={[
+				{
+					key: "1",
+					label: "Dashboard",
+					icon: <DashboardOutlined />,
+					onClick: () => {
+						console.log("Navigating to Dashboard");
+						// Add navigation logic here (e.g., redirect to /dashboard)
+					},
+				},
+				{
+					key: "2",
+					label: "Profile",
+					icon: <UserOutlined />,
+					onClick: () => {
+						console.log("Navigating to Profile");
+						// Add navigation logic here (e.g., redirect to /profile)
+					},
+				},
+				{
+					key: "3",
+					label: "Logout",
+					icon: <LogoutOutlined />,
+					onClick: logOut,
+				},
+			]}
+		/>
+	);
 	return (
 		<nav className="flex container mx-auto justify-between items-center py-4">
 			<div>
@@ -46,17 +84,31 @@ const NavBar = () => {
 				<ul className="flex items-center gap-7 md:text-lg">{links}</ul>
 			</div>
 			<div className="flex gap-2">
-				<Link to={"/login"}>
-					<Button>Login</Button>
-				</Link>
-				<Link to={"/signup"}>
-					<Button
-						type="primary"
-						style={{ backgroundColor: "#21764C", borderColor: "#21764C" }}
-					>
-						Signup
-					</Button>
-				</Link>
+				{user ? (
+						<Dropdown overlay={menu} trigger={["click"]}>
+								<Space>
+									<Avatar
+										size="medium"
+										icon={<UserOutlined />}
+										style={{ backgroundColor: "#003E30", cursor: "pointer" }}
+									/>
+								</Space>
+						</Dropdown>
+				) : (
+					<>
+						<Link to={"/login"}>
+							<Button>Login</Button>
+						</Link>
+						<Link to={"/signup"}>
+							<Button
+								type="primary"
+								style={{ backgroundColor: "#21764C", borderColor: "#21764C" }}
+							>
+								Signup
+							</Button>
+						</Link>
+					</>
+				)}
 			</div>
 		</nav>
 	);
