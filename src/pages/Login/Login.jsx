@@ -22,7 +22,6 @@ const Login = () => {
 	const navigate = useNavigate();
 	const onFinish = (values) => {
 		console.log("Received values:", values);
-		// Handle login logic here (e.g., API call)
 	};
 
 	// handle sign up with google

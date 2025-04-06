@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import { Avatar, Dropdown, Menu, Space, Button } from "antd";
-import useAuth from "../../hooks/useAuth"
+import useAuth from "../../hooks/useAuth";
 import {
 	UserOutlined,
 	DashboardOutlined,
@@ -11,9 +11,7 @@ const links = (
 		<li>
 			<NavLink
 				to="/"
-				className={
-					"py-2 px-2.5 text-base font-medium hover:text-primary"
-				}
+				className={"py-2 px-2.5 text-base font-medium hover:text-primary"}
 			>
 				Home
 			</NavLink>
@@ -21,9 +19,7 @@ const links = (
 		<li>
 			<NavLink
 				to="/events"
-				className={
-					"py-2 px-2.5 text-base font-medium hover:text-primary"
-				}
+				className={"py-2 px-2.5 text-base font-medium hover:text-primary"}
 			>
 				Events
 			</NavLink>
@@ -31,9 +27,7 @@ const links = (
 		<li>
 			<NavLink
 				to="/donate"
-				className={
-					"py-2 px-2.5 text-base font-medium hover:text-primary"
-				}
+				className={"py-2 px-2.5 text-base font-medium hover:text-primary"}
 			>
 				Donate
 			</NavLink>
@@ -42,7 +36,7 @@ const links = (
 );
 
 const NavBar = () => {
-	const {user, logOut} = useAuth();
+	const { user, logOut } = useAuth();
 	const menu = (
 		<Menu
 			items={[
@@ -52,7 +46,6 @@ const NavBar = () => {
 					icon: <DashboardOutlined />,
 					onClick: () => {
 						console.log("Navigating to Dashboard");
-						// Add navigation logic here (e.g., redirect to /dashboard)
 					},
 				},
 				{
@@ -61,7 +54,6 @@ const NavBar = () => {
 					icon: <UserOutlined />,
 					onClick: () => {
 						console.log("Navigating to Profile");
-						// Add navigation logic here (e.g., redirect to /profile)
 					},
 				},
 				{
@@ -85,15 +77,14 @@ const NavBar = () => {
 			</div>
 			<div className="flex gap-2">
 				{user ? (
-						<Dropdown overlay={menu} trigger={["click"]}>
-								<Space>
-									<Avatar
-										size="medium"
-										icon={<UserOutlined />}
-										style={{ backgroundColor: "#003E30", cursor: "pointer" }}
-									/>
-								</Space>
-						</Dropdown>
+					<Dropdown overlay={menu} trigger={["click"]}>
+						<Space>
+							<Avatar
+								size="medium"
+								style={{ backgroundColor: "#003E30", cursor: "pointer" }}
+							>{user.displayName[0]}</Avatar>
+						</Space>
+					</Dropdown>
 				) : (
 					<>
 						<Link to={"/login"}>
