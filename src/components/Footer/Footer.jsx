@@ -2,13 +2,13 @@ import React from 'react';
 
 const Footer = () => {
   return (
-		<footer className="bg-[#1F3431] text-white py-10 flex flex-col justify-center items-center">
+		<footer className="bg-green-900 text-white py-10 flex flex-col justify-center items-center">
 			<div className="max-w-6xl w-full mx-auto px-4 flex justify-around items-center ">
 				<div>
 					<h4 className="font-semibold text-lg">PlanetCare</h4>
 					<p className="mt-2 text-sm">Together for a greener future.</p>
 				</div>
-				<div className='max-sm:hidden'>
+				<div className="max-sm:hidden">
 					<h4 className="font-semibold text-lg">Quick Links</h4>
 					<ul className="mt-2 space-y-1 text-sm">
 						<li>
@@ -31,14 +31,14 @@ const Footer = () => {
 				<div>
 					<h4 className="font-semibold text-lg">Contact Us</h4>
 					<p className="mt-2 text-sm">
-						eco@greenorg.com
+						planet@care.com
 						<br />
 						Sylhet, Bangladesh
 					</p>
 				</div>
 			</div>
 			<p className="text-center text-sm mt-6 text-gray-400">
-				© 2025 EcoSync. All rights reserved.
+				&copy; {new Date().getFullYear()} PlanetCare. All rights reserved.
 			</p>
 		</footer>
 	);

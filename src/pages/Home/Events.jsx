@@ -3,6 +3,7 @@ import React from "react";
 import useAxios from "../../hooks/useAxios";
 import EventCard from "../../components/EventCard/EventCard";
 import EventCardSkeleton from "../../components/EventCard/EventCardSkeleton";
+import { Link } from "react-router-dom";
 
 const Events = () => {
 	const axiosPublic = useAxios();
@@ -24,14 +25,14 @@ const Events = () => {
 						? Array(3)
 								.fill(null)
 								.map((_, index) => <EventCardSkeleton key={index} />)
-						: events.map((event) => (
-								<EventCard key={event._id} event={event} />
-						  ))}
+						: events
+								.slice(0, 3)
+								.map((event) => <EventCard key={event._id} event={event} />)}
 				</div>
 				<div className="text-center mt-8">
-					<a href="/events" className="text-green-600 hover:underline">
+					<Link to={"/events"} className="text-green-600 hover:underline">
 						See All Events →
-					</a>
+					</Link>
 				</div>
 			</div>
 		</section>
