@@ -2,21 +2,37 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import useAxios from "../../hooks/useAxios";
 import moment from "moment";
+import useAuth from "../../hooks/useAuth";
+import { message } from "antd";
 
 const EventDetails = () => {
 	const { id } = useParams();
+	const {user} = useAuth()
 	const axiosPublic = useAxios();
-	const { data:event, isLoading } = useQuery({
+	const { data: event, isLoading, refetch } = useQuery({
 		queryKey: ["event details"],
 		queryFn: async () => {
 			const result = await axiosPublic.get(`/events/${id}`);
 			return result.data;
 		},
 	});
+	// function for handling volunteer registration
+	const handleVolunteerRegistration = async () => {
+		try {
+			await axiosPublic.patch(`/events/volunteer/${id}`, {
+				email: user.email,
+			});
+			refetch();
+			message.success("Thank you for volunteering!");
+		} catch (error) {
+			console.log(error);
+			message.error(`${error.response.data.message}`);
+		}
+	};
 
-  if (isLoading) {
-    return;
-  }
+	if (isLoading) {
+		return;
+	}
 
 	return (
 		<section className="max-w-3xl mx-auto px-4 py-10 mt-4 md:mt-10 bg-white rounded-xl shadow-sm border border-gray-100">
@@ -37,7 +53,10 @@ const EventDetails = () => {
 				</p>
 			</div>
 
-			<button className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-md">
+			<button
+				onClick={handleVolunteerRegistration}
+				className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-md"
+			>
 				Volunteer for this Event
 			</button>
 		</section>
