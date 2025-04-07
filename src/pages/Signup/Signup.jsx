@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	Form,
 	Input,
@@ -26,12 +26,13 @@ const Signup = () => {
 	const { createUser, logInGoogle } = useAuth();
 	const axiosPublic = useAxios();
 	const navigate = useNavigate();
+	const [loading, setLoading] = useState(false);
 
 	// handle sign up
 	const onFinish = async (data) => {
-		const user = await createUser(data.email, data.password, data.name);
-		if (user?.email) {
-			message.success(`Welcome ${user.displayName}`);
+		setLoading(true);
+		try {
+			const user = await createUser(data.email, data.password, data.name);
 			const userDb = {
 				name: user.displayName,
 				email: user.email,
@@ -39,10 +40,12 @@ const Signup = () => {
 				createdAt: new Date().toISOString(),
 			};
 			await axiosPublic.post("/users", userDb);
+			message.success(`Welcome ${user.displayName}`);
 			navigate("/");
-		} else {
-			alert();
-			message.error("Oops! Something went wrong.");
+		} catch (error) {
+			message.error(`Error: ${error.message}`);
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -62,7 +65,7 @@ const Signup = () => {
 	};
 
 	return (
-		<div className="flex justify-center items-center bg-[#f0f2f5] w-full min-h-[calc(100vh-277px)] max-sm:px-3.5">
+		<div className="flex py-5 justify-center items-center bg-[#f0f2f5] w-full min-h-[calc(100vh-277px)] max-sm:px-3.5">
 			<Card
 				style={{
 					boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
@@ -156,7 +159,7 @@ const Signup = () => {
 							block
 							style={{ backgroundColor: "#003E30", borderColor: "#003E30" }}
 						>
-							Sign Up
+							{loading ? "Please wait..." : "Sign Up"}
 						</Button>
 					</Form.Item>
 

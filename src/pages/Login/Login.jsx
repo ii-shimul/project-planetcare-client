@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	Form,
 	Input,
@@ -17,31 +17,50 @@ import useAxios from "../../hooks/useAxios";
 const { Title } = Typography;
 
 const Login = () => {
-	const { logInGoogle } = useAuth();
+	const { logInGoogle, logIn } = useAuth();
 	const axiosPublic = useAxios();
+	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
-	const onFinish = (values) => {
-		console.log("Received values:", values);
+
+	// login with email and pass
+	const onFinish = async (values) => {
+		setLoading(true);
+		try {
+			const result = await logIn(values.email, values.password);
+			message.success(`Welcome ${result.user.displayName}`);
+			navigate("/");
+		} catch (error) {
+			message.error(`Error: ${error.message}`);
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	// handle sign up with google
 	const handleGoogleLogIn = async () => {
-		const res = await logInGoogle();
-		const user = res.user;
-		const userDb = {
-			name: user.displayName,
-			email: user.email,
-			role: "donor",
-			createdAt: new Date().toISOString(),
-		};
-		await axiosPublic.post("/users", userDb);
-		alert(`Welcome ${user.displayName}`);
-		message.success(`Welcome ${user.displayName}`);
-		navigate("/");
+		setLoading(true);
+		try {
+			const res = await logInGoogle();
+			const user = res.user;
+			const userDb = {
+				name: user.displayName,
+				email: user.email,
+				role: "donor",
+				createdAt: new Date().toISOString(),
+			};
+			await axiosPublic.post("/users", userDb);
+			message.success(`Welcome ${user.displayName}`);
+			navigate("/");
+			setLoading(false);
+		} catch (error) {
+			console.log(error.message);
+			message.error("Something went wrong!");
+			setLoading(false);
+		}
 	};
 
 	return (
-		<div className="flex justify-center items-center bg-[#f0f2f5] w-full min-h-[calc(100vh-277px)] max-sm:px-3.5">
+		<div className="flex justify-center items-center py-5 bg-[#f0f2f5] w-full min-h-[calc(100vh-277px)] max-sm:px-3.5">
 			<Card
 				style={{
 					boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
@@ -98,7 +117,7 @@ const Login = () => {
 							block
 							style={{ backgroundColor: "#003E30", borderColor: "#003E30" }}
 						>
-							Log In
+							{loading ? "Please wait..." : "Login"}
 						</Button>
 					</Form.Item>
 

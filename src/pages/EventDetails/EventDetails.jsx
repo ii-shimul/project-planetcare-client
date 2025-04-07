@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import useAxios from "../../hooks/useAxios";
+import moment from "moment";
 
 const EventDetails = () => {
 	const { id } = useParams();
@@ -14,14 +15,14 @@ const EventDetails = () => {
 	});
 
   if (isLoading) {
-    return <h1>loading</h1>;
+    return;
   }
 
 	return (
 		<section className="max-w-3xl mx-auto px-4 py-10 mt-4 md:mt-10 bg-white rounded-xl shadow-sm border border-gray-100">
 			<h1 className="text-3xl font-bold text-green-700 mb-2">{event.title}</h1>
 			<p className="text-sm text-gray-500 mb-6">
-				📅 {new Date(event.date).toLocaleString()} | 📍 {event.location}
+				📅 {moment(event.date).format("MMMM D, YYYY, LT")} | 📍 {event.location}
 			</p>
 
 			<p className="text-gray-700 leading-relaxed mb-6">{event.description}</p>

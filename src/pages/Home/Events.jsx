@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import useAxios from "../../hooks/useAxios";
 import EventCard from "../../components/EventCard/EventCard";
+import EventCardSkeleton from "../../components/EventCard/EventCardSkeleton";
 
 const Events = () => {
 	const axiosPublic = useAxios();
@@ -12,9 +13,6 @@ const Events = () => {
 			return result.data;
 		},
 	});
-	if (isLoading) {
-		return;
-	}
 	return (
 		<section className="py-16 bg-gray-100 px-4">
 			<div className="max-w-6xl mx-auto">
@@ -22,9 +20,13 @@ const Events = () => {
 					Upcoming Events
 				</h2>
 				<div className="grid md:grid-cols-3 gap-6">
-					{events.map((event) => (
-						<EventCard key={event._id} event={event} />
-					))}
+					{isLoading
+						? Array(3)
+								.fill(null)
+								.map((_, index) => <EventCardSkeleton key={index} />)
+						: events.map((event) => (
+								<EventCard key={event._id} event={event} />
+						  ))}
 				</div>
 				<div className="text-center mt-8">
 					<a href="/events" className="text-green-600 hover:underline">

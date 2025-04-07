@@ -76,13 +76,15 @@ const NavBar = () => {
 				<ul className="flex items-center gap-7 md:text-lg">{links}</ul>
 			</div>
 			<div className="flex gap-2">
-				{user ? (
+				{user?.email ? (
 					<Dropdown overlay={menu} trigger={["click"]}>
 						<Space>
 							<Avatar
 								size="medium"
 								style={{ backgroundColor: "#003E30", cursor: "pointer" }}
-							>{user.displayName[0]}</Avatar>
+							>
+								{typeof user?.displayName === "string" && user.displayName[0] ? user.displayName[0] : "U"}
+							</Avatar>
 						</Space>
 					</Dropdown>
 				) : (
