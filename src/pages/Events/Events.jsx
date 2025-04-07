@@ -2,19 +2,40 @@ import React from "react";
 import useAxios from "../../hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
+import EventSkeleton from "./EventSkeleton";
+import useAuth from "../../hooks/useAuth";
+import { message } from "antd";
 
 const Events = () => {
 	const axiosPublic = useAxios();
-	const { data: events, isLoading } = useQuery({
+	const { user } = useAuth();
+	// fetch events
+	const {
+		data: events,
+		isLoading,
+		refetch,
+	} = useQuery({
 		queryKey: ["eventsHome"],
 		queryFn: async () => {
 			const result = await axiosPublic.get("/events");
 			return result.data;
 		},
 	});
-  if (isLoading) {
-    return <h1>dkj</h1>
-  }
+
+	// function for handling volunteer registration
+	const handleVolunteerRegistration = async (id) => {
+		try {
+			await axiosPublic.patch(`/events/volunteer/${id}`, {
+				email: user.email,
+			});
+			refetch();
+			message.success("Thank you for volunteering!");
+		} catch (error) {
+      console.log(error);
+			message.error(`${error.response.data.message}`);
+		}
+	};
+
 	return (
 		<div className="bg-gray-50">
 			<div className="bg-green-600 text-white py-20 px-4 text-center">
@@ -46,28 +67,38 @@ const Events = () => {
 
 			{/* Events */}
 			<div className="grid md:grid-cols-3 gap-6 px-4 max-w-6xl mx-auto">
-				{events.map((event, index) => (
-					<div
-						key={index}
-						className="flex flex-col bg-white p-6 rounded-xl shadow-md border border-gray-300 hover:shadow-lg transition"
-					>
-						<h2 className="text-2xl font-semibold text-green-700">
-							{event.title}
-						</h2>
-						<p className="text-gray-600 mt-2">{event.description}</p>
-						<div className="mt-4 text-sm text-gray-500 grow">
-							<p>
-								<strong>Date:</strong> {moment(event.date).calendar()}
-							</p>
-							<p>
-								<strong>Location:</strong> {event.location}
-							</p>
-						</div>
-						<button className="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
-							Register to Volunteer
-						</button>
-					</div>
-				))}
+				{isLoading
+					? Array(3)
+							.fill(null)
+							.map((_, index) => <EventSkeleton key={index} />)
+					: events.map((event) => (
+							<div
+								key={event._id}
+								className="flex flex-col bg-white p-6 rounded-xl shadow-md border border-gray-300 hover:shadow-lg transition"
+							>
+								<h2 className="text-2xl font-semibold text-green-700">
+									{event.title}
+								</h2>
+								<p className="text-gray-600 mt-2">{event.description}</p>
+								<div className="mt-4 text-sm text-gray-500 grow">
+									<p>
+										<strong>Date:</strong> {moment(event.date).calendar()}
+									</p>
+									<p>
+										<strong>Location:</strong> {event.location}
+									</p>
+									<p>
+										<strong>Volunteers:</strong> {event.volunteers.length}
+									</p>
+								</div>
+								<button
+									onClick={() => handleVolunteerRegistration(event._id)}
+									className="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+								>
+									Register to Volunteer
+								</button>
+							</div>
+					  ))}
 			</div>
 
 			{/* FAQ */}
