@@ -6,6 +6,7 @@ import Signup from "../pages/Signup/Signup";
 import Events from "../pages/Events/Events";
 import Error from "../pages/Error/Error";
 import EventDetails from "../pages/EventDetails/EventDetails";
+import Donate from "../pages/Donate/Donate";
 
 const router = createBrowserRouter([
 	{
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
 			{
 				path: "/events/:id",
 				element: <EventDetails />,
+			},
+			{
+				path: "/donate",
+				element: <Donate />,
 			},
 		],
 	},

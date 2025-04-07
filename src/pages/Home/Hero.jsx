@@ -1,5 +1,6 @@
 import React from "react";
 import hero from "../../assets/hero.jpg";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
 	return (
@@ -17,18 +18,18 @@ const Hero = () => {
 					Empowering communities through sustainable actions.
 				</p>
 				<div className="mt-6 flex flex-col sm:flex-row justify-center gap-4">
-					<a
-						href="/events"
+					<Link
+						to={"/events"}
 						className="bg-[#003E30] text-white px-6 py-2 rounded-xl hover:bg-green-700 transition-colors"
 					>
 						Explore Events
-					</a>
-					<a
-						href="/donate"
+					</Link>
+					<Link
+						to={"/donate"}
 						className="border border-green-600 text-green-600 px-6 py-2 rounded-xl bg-green-100 hover:bg-white hover:text-green-700 transition-colors"
 					>
 						Donate Now
-					</a>
+					</Link>
 				</div>
 			</div>
 		</section>

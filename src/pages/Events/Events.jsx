@@ -38,7 +38,7 @@ const Events = () => {
 
 	return (
 		<div className="bg-gray-50">
-			<div className="bg-green-600 text-white py-20 px-4 text-center">
+			<div className="bg-green-700 text-white py-20 px-4 text-center">
 				<h1 className="text-4xl md:text-5xl font-bold">🌱 PlanetCare Events</h1>
 				<p className="mt-4 text-lg max-w-2xl mx-auto">
 					Explore our upcoming events and take action to protect our planet.
