@@ -1,8 +1,5 @@
+import DonationForm from "./DonationForm";
 const Donate = () => {
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-	};
 
 	return (
 		<div className="bg-gray-50">
@@ -20,62 +17,7 @@ const Donate = () => {
 				<h2 className="text-2xl font-bold text-green-800 mb-8 text-center">
 					Make a Donation
 				</h2>
-				<form
-					onSubmit={handleSubmit}
-					className="bg-white p-8 shadow-md rounded-xl space-y-6"
-				>
-					<div>
-						<label className="block text-sm font-medium text-gray-700">
-							Full Name
-						</label>
-						<input
-							type="text"
-							name="name"
-							required
-							className="w-full mt-1 p-3 border border-gray-300 rounded-lg"
-						/>
-					</div>
-					<div>
-						<label className="block text-sm font-medium text-gray-700">
-							Email
-						</label>
-						<input
-							type="email"
-							name="email"
-							required
-							className="w-full mt-1 p-3 border border-gray-300 rounded-lg"
-						/>
-					</div>
-					<div>
-						<label className="block text-sm font-medium text-gray-700">
-							Amount (BDT)
-						</label>
-						<input
-							type="number"
-							name="amount"
-							required
-							className="w-full mt-1 p-3 border border-gray-300 rounded-lg"
-							min="1"
-						/>
-					</div>
-					<div>
-						<label className="block text-sm font-medium text-gray-700">
-							Message (Optional)
-						</label>
-						<textarea
-							name="message"
-							rows="3"
-							className="w-full mt-1 p-3 border border-gray-300 rounded-lg"
-							placeholder="Write a message..."
-						/>
-					</div>
-					<button
-						type="submit"
-						className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition"
-					>
-						Donate Now
-					</button>
-				</form>
+				<DonationForm />
 			</div>
 
 			{/* Impact Section */}

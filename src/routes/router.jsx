@@ -7,6 +7,7 @@ import Events from "../pages/Events/Events";
 import Error from "../pages/Error/Error";
 import EventDetails from "../pages/EventDetails/EventDetails";
 import Donate from "../pages/Donate/Donate";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
 	{
@@ -36,7 +37,11 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/donate",
-				element: <Donate />,
+				element: (
+					<PrivateRoute>
+						<Donate />
+					</PrivateRoute>
+				),
 			},
 		],
 	},
