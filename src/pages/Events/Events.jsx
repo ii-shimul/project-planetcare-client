@@ -24,6 +24,10 @@ const Events = () => {
 
 	// function for handling volunteer registration
 	const handleVolunteerRegistration = async (id) => {
+		if (!user?.email) {
+			message.error("You have login first!");
+			return;
+		}
 		try {
 			await axiosPublic.patch(`/events/volunteer/${id}`, {
 				email: user.email,
