@@ -25,7 +25,7 @@ const Events = () => {
 	// function for handling volunteer registration
 	const handleVolunteerRegistration = async (id) => {
 		if (!user?.email) {
-			message.error("You have login first!");
+			message.error("You have to login first!");
 			return;
 		}
 		try {
