@@ -8,6 +8,8 @@ import Error from "../pages/Error/Error";
 import EventDetails from "../pages/EventDetails/EventDetails";
 import Donate from "../pages/Donate/Donate";
 import PrivateRoute from "./PrivateRoute";
+import DashboardLayout from "../layouts/DashboardLayout";
+import Overview from "../pages/DashboardComponents/Admin/Overview";
 
 const router = createBrowserRouter([
 	{
@@ -44,6 +46,14 @@ const router = createBrowserRouter([
 				),
 			},
 		],
+	},
+	{
+		path: "/dashboard",
+		element: <DashboardLayout />,
+		children: [{
+			path: "/dashboard/overview",
+			element: <Overview/>
+		}],
 	},
 ]);
 

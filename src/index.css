@@ -21,3 +21,7 @@
   border-radius: 8px;
   transition: background-color 0.3s ease;
 }
+
+.ant-menu-item-selected {
+  background-color: #21764C !important;
+}
