@@ -10,6 +10,10 @@ import Donate from "../pages/Donate/Donate";
 import PrivateRoute from "./PrivateRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Overview from "../pages/DashboardComponents/Admin/Overview";
+import ManageUsers from "../pages/DashboardComponents/Admin/ManageUsers";
+import ManageEvents from "../pages/DashboardComponents/Admin/ManageEvents";
+import Donations from "../pages/DashboardComponents/Admin/Donations";
+import Reports from "../pages/DashboardComponents/Admin/Reports";
 
 const router = createBrowserRouter([
 	{
@@ -50,10 +54,28 @@ const router = createBrowserRouter([
 	{
 		path: "/dashboard",
 		element: <DashboardLayout />,
-		children: [{
-			path: "/dashboard/overview",
-			element: <Overview/>
-		}],
+		children: [
+			{
+				path: "/dashboard",
+				element: <Overview />,
+			},
+			{
+				path: "/dashboard/manage-users",
+				element: <ManageUsers />,
+			},
+			{
+				path: "/dashboard/manage-events",
+				element: <ManageEvents />,
+			},
+			{
+				path: "/dashboard/donations",
+				element: <Donations />,
+			},
+			{
+				path: "/dashboard/reports",
+				element: <Reports />,
+			},
+		],
 	},
 ]);
 
