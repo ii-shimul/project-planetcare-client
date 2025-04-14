@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Layout, Menu, Typography } from "antd";
 import {
 	UserOutlined,
@@ -6,13 +6,9 @@ import {
 	CalendarOutlined,
 	DollarOutlined,
 	BarChartOutlined,
+	DashboardOutlined,
 } from "@ant-design/icons";
-import {
-	BrowserRouter as Router,
-	Link,
-	useLocation,
-	Outlet,
-} from "react-router-dom";
+import { Link, useLocation, Outlet } from "react-router-dom";
 
 const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
@@ -57,15 +53,29 @@ const DashboardLayout = () => {
 			label: <Link to="/dashboard/reports">Reports & Analytics</Link>,
 		},
 	];
-
+	const [collapsed, setCollapsed] = useState(false);
 	return (
 		<Layout style={{ minHeight: "100vh" }}>
 			{/* Sidebar */}
-			<Sider width={200} style={{ backgroundColor: "#003E30" }}>
+			<Sider
+				collapsible
+				collapsed={collapsed}
+				onCollapse={(value) => setCollapsed(value)}
+				breakpoint="sm"
+				collapsedWidth={45}
+				width={200}
+				style={{ backgroundColor: "#003E30" }}
+			>
 				<div style={{ padding: "16px", textAlign: "center" }}>
-					<Title level={4} style={{ color: "#fff", margin: 0 }}>
-					Dashboard
-					</Title>
+					{collapsed ? (
+						<span className="text-white">
+							<DashboardOutlined />
+						</span>
+					) : (
+						<Title level={4} style={{ color: "#fff", margin: 0 }}>
+							Dashboard
+						</Title>
+					)}
 				</div>
 				<Menu
 					theme="dark"
@@ -94,9 +104,9 @@ const DashboardLayout = () => {
 				</Header>
 
 				{/* Content */}
-				<Content style={{ margin: "24px 16px", backgroundColor: "#f0f2f5" }}>
+				<Content style={{ margin: "16px 16px", backgroundColor: "#f0f2f5" }}>
 					<div
-						style={{ padding: 24, backgroundColor: "#fff", borderRadius: 8 }}
+						style={{ padding: 16, backgroundColor: "#ffff", borderRadius: 8 }}
 					>
 						<Outlet />
 					</div>

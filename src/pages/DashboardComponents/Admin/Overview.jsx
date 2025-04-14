@@ -1,55 +1,65 @@
-import {
-	Layout,
-	Card,
-	Statistic,
-} from "antd";
+import { Layout, Card, Statistic } from "antd";
 import {
 	UserOutlined,
 	TeamOutlined,
 	CalendarOutlined,
 	DollarOutlined,
 } from "@ant-design/icons";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const { Content } = Layout;
 
 const Overview = () => {
+	const axiosSecure = useAxiosSecure();
+	const { data: stats, isLoading } = useQuery({
+		queryKey: ["admin-stats"],
+		queryFn: async () => {
+			const result = await axiosSecure.get("/admin-stats");
+			return result.data;
+		},
+	});
+
+	if (isLoading) {
+		return;
+	}
+
 	return (
-		<Content style={{ margin: "24px 16px", backgroundColor: "#f0f2f5" }}>
-			<div style={{ padding: 24, backgroundColor: "#fff", borderRadius: 8 }}>
+		<Content style={{ margin: "16px 16px", backgroundColor: "#f0f2f5" }}>
+			<div style={{ padding: 20, backgroundColor: "#fff", borderRadius: 8 }}>
 				<div
 					style={{
 						display: "grid",
 						gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
 						gap: "16px",
-						marginBottom: "24px",
 					}}
 				>
-					<Card bordered>
+					<Card>
 						<Statistic
 							title="Total Users"
-							value={150}
+							value={stats.totalUsers}
 							prefix={<UserOutlined />}
 						/>
 					</Card>
-					<Card bordered>
+					<Card>
 						<Statistic
 							title="Active Events"
-							value={5}
+							value={stats.totalEvents}
 							prefix={<CalendarOutlined />}
 						/>
 					</Card>
-					<Card bordered>
+					<Card>
 						<Statistic
 							title="Volunteers"
 							value={120}
 							prefix={<TeamOutlined />}
 						/>
 					</Card>
-					<Card bordered>
+					<Card>
 						<Statistic
 							title="Total Donations"
-							value={12000}
+							value={stats.totalDonations[0].total}
 							prefix={<DollarOutlined />}
-							suffix="USD"
+							suffix="BDT"
 						/>
 					</Card>
 				</div>
