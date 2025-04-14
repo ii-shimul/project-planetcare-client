@@ -42,15 +42,12 @@ const NavBar = () => {
 			items={[
 				{
 					key: "1",
-					label: "Dashboard",
+					label: <Link to={"/dashboard"}>Dashboard</Link>,
 					icon: <DashboardOutlined />,
-					onClick: () => {
-						console.log("Navigating to Dashboard");
-					},
 				},
 				{
 					key: "2",
-					label: "Profile",
+					label: <Link to={"/profile"}>Profile</Link>,
 					icon: <UserOutlined />,
 					onClick: () => {
 						console.log("Navigating to Profile");
@@ -83,7 +80,9 @@ const NavBar = () => {
 								size="medium"
 								style={{ backgroundColor: "#003E30", cursor: "pointer" }}
 							>
-								{typeof user?.displayName === "string" && user.displayName[0] ? user.displayName[0] : "U"}
+								{typeof user?.displayName === "string" && user.displayName[0]
+									? user.displayName[0]
+									: "U"}
 							</Avatar>
 						</Space>
 					</Dropdown>

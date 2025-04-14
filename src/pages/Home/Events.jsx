@@ -22,11 +22,11 @@ const Events = () => {
 				</h2>
 				<div className="grid md:grid-cols-3 gap-6">
 					{isLoading
-						? Array(3)
+						? Array(6)
 								.fill(null)
 								.map((_, index) => <EventCardSkeleton key={index} />)
 						: events
-								.slice(0, 3)
+								.slice(0, 6)
 								.map((event) => <EventCard key={event._id} event={event} />)}
 				</div>
 				<div className="text-center mt-8">
