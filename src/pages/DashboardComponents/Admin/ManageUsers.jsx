@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Typography, Space } from "antd";
+import { Table, Button, Typography, Space, message } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import useAxiosSecure from "/src/hooks/useAxiosSecure";
+import moment from "moment";
 
 const { Title } = Typography;
 
@@ -40,7 +41,6 @@ const ManageUsers = () => {
 				setLoading(false);
 			}
 		};
-
 		fetchUsers();
 	}, [pagination.current, pagination.pageSize, axiosSecure]);
 
@@ -51,6 +51,18 @@ const ManageUsers = () => {
 			current: newPagination.current,
 			pageSize: newPagination.pageSize,
 		}));
+	};
+
+	const handleMakeAdmin = async (id) => {
+		try {
+			const result = await axiosSecure.patch(`/users/make-admin/${id}`);
+			if (result.data.modifiedCount > 0) {
+				message.success("Operation successful!");
+			}
+		} catch (error) {
+			console.log(error);
+			message.error(error.message);
+		}
 	};
 
 	// Table columns
@@ -73,23 +85,30 @@ const ManageUsers = () => {
 			key: "role",
 		},
 		{
+			title: "User Since",
+			dataIndex: "createdAt",
+			key: "createdAt",
+			render: (createdAt) => moment(createdAt).format("MMMM Do, YYYY"),
+		},
+		{
 			title: "Actions",
 			key: "actions",
-			render: (_, record) => (
+			render: (_, user) => (
 				<Button
 					type="link"
 					icon={<EditOutlined />}
-					onClick={() => console.log(`Edit user: ${record.name}`)}
+					onClick={() => handleMakeAdmin(user._id)}
+          disabled={user.role === "Admin"}
 				>
-					Edit
+					Make Admin
 				</Button>
 			),
 		},
 	];
 
 	return (
-		<div className="flex flex-col justify-center items-center w-full max-w-7xl mx-auto">
-			<Title level={4} style={{ marginBottom: 16 }}>
+		<div className="flex flex-col justify-center items-center w-full max-w-7xl mx-auto sm:px-6 lg:px-8">
+			<Title level={4} style={{ marginBottom: 16, textAlign: "center" }}>
 				Manage Users
 			</Title>
 			<Table
@@ -101,6 +120,7 @@ const ManageUsers = () => {
 				bordered
 				locale={{ emptyText: "No users found" }}
 				className="w-full"
+				scroll={{ x: 800 }}
 			/>
 		</div>
 	);
