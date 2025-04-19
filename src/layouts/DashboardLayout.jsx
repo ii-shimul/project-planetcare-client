@@ -7,6 +7,7 @@ import {
 	DollarOutlined,
 	BarChartOutlined,
 	DashboardOutlined,
+	HomeOutlined,
 } from "@ant-design/icons";
 import { Link, useLocation, Outlet } from "react-router-dom";
 
@@ -51,6 +52,13 @@ const DashboardLayout = () => {
 			key: "reports",
 			icon: <BarChartOutlined />,
 			label: <Link to="/dashboard/reports">Reports & Analytics</Link>,
+		},
+		{
+			label: <hr className="m-0 p-0"/>,
+		},
+		{
+			icon: <HomeOutlined />,
+			label: <Link to="/">Back to Home</Link>,
 		},
 	];
 	const [collapsed, setCollapsed] = useState(false);
