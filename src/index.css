@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
 
+.material-icons {
+  font-size: inherit;
+  line-height: 1;
+}
+
 @import "tailwindcss";
 
 @theme {
@@ -8,6 +13,14 @@
   --color-primaryBG: #A3D9A5;
   --color-active: #007BFF;
   --color-secondaryBG: #D6EFFF;
+  --color-background-light: "#FFFFFF";
+  --color-background-dark: "#121212";
+  --color-surface-light: "#F9FAFB";
+  --color-surface-dark: "#1F2937";
+  --color-text-light: "#111827";
+  --color-text-dark: "#F9FAFB";
+  --color-subtext-light: "#6B7280";
+  --color-subtext-dark: "#9CA3AF";
 }
 
 
