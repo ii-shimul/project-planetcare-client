@@ -11,7 +11,7 @@ const links = (
 		<li>
 			<NavLink
 				to="/"
-				className={"py-2 px-2.5 text-base font-medium hover:text-primary"}
+				className={"inline-flex items-center h-10 px-3 text-base font-medium hover:text-primary"}
 			>
 				Home
 			</NavLink>
@@ -19,7 +19,7 @@ const links = (
 		<li>
 			<NavLink
 				to="/events"
-				className={"py-2 px-2.5 text-base font-medium hover:text-primary"}
+				className={"inline-flex items-center h-10 px-3 text-base font-medium hover:text-primary"}
 			>
 				Events
 			</NavLink>
@@ -27,7 +27,7 @@ const links = (
 		<li>
 			<NavLink
 				to="/donate"
-				className={"py-2 px-2.5 text-base font-medium hover:text-primary"}
+				className={"inline-flex items-center h-10 px-3 text-base font-medium hover:text-primary"}
 			>
 				Donate
 			</NavLink>
@@ -63,16 +63,16 @@ const NavBar = () => {
 		/>
 	);
 	return (
-		<nav className="flex container mx-auto justify-between items-center py-4">
-			<div>
-				<h1 className="text-xl md:text-3xl font-semibold text-primary">
+		<nav className="max-w-7xl mx-auto h-16 px-4 flex justify-between items-center">
+			<div className="flex items-center">
+				<h1 className="text-xl md:text-3xl font-semibold text-primary leading-none">
 					PlanetCare
 				</h1>
 			</div>
-			<div>
+			<div className="h-full flex items-center">
 				<ul className="flex items-center gap-7 md:text-lg">{links}</ul>
 			</div>
-			<div className="flex gap-2">
+			<div className="flex items-center gap-2">
 				{user?.email ? (
 					<Dropdown overlay={menu} trigger={["click"]}>
 						<Space>

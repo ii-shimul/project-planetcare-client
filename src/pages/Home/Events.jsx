@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 import useAxios from "../../hooks/useAxios";
 import EventCard from "../../components/EventCard/EventCard";
 import EventCardSkeleton from "../../components/EventCard/EventCardSkeleton";
@@ -16,8 +15,8 @@ const Events = () => {
 	});
 	return (
 		<section className="py-16 bg-gray-100 px-4">
-			<div className="max-w-6xl mx-auto">
-				<h2 className="text-3xl font-bold text-center text-green-800 mb-10">
+			<div className="max-w-7xl mx-auto">
+				<h2 className="text-4xl font-bold text-center text-primary mb-10">
 					Upcoming Events
 				</h2>
 				<div className="grid md:grid-cols-3 gap-6">

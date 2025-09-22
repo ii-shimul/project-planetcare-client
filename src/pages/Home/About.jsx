@@ -5,11 +5,9 @@ const About = () => {
 			className="py-20 bg-background-light dark:bg-background-dark"
 			id="about"
 		>
-			<div className="container mx-auto px-6">
+			<div className="max-w-7xl mx-auto px-6">
 				<div className="text-center mb-12">
-					<h2 className="text-4xl font-bold text-text-light dark:text-text-dark">
-						About Us
-					</h2>
+					<h2 className="text-4xl font-bold text-primary">About Us</h2>
 					<p className="text-lg text-subtext-light dark:text-subtext-dark mt-4 max-w-3xl mx-auto">
 						We're a mission-driven organization dedicated to sustainability,
 						climate action, and community engagement. Our goal is to protect

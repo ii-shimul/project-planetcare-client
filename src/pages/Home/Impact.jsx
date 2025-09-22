@@ -2,8 +2,8 @@ import React from 'react';
 
 const Impact = () => {
   return (
-		<section className="py-20 bg-white text-center container mx-auto">
-			<h2 className="text-3xl font-bold text-green-800">Our Impact</h2>
+		<section className="py-20 bg-white text-center max-w-7xl mx-auto">
+			<h2 className="text-4xl font-bold text-primary">Our Impact</h2>
 			<div className="mt-8 flex items-center flex-wrap justify-around">
 				<div>
 					<p className="text-4xl font-bold text-green-600">2,500+</p>
