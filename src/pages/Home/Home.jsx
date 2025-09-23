@@ -1,9 +1,9 @@
-import React from 'react';
 import Hero from './Hero';
 import About from './About';
 import Events from './Events';
 import Donation from './Donation';
 import Impact from "./Impact";
+import Testimonials from './Testimonials';
 
 
 const Home = () => {
@@ -14,6 +14,7 @@ const Home = () => {
       <Events/>
       <Donation/>
       <Impact/>
+      <Testimonials/>
     </div>
   );
 };
