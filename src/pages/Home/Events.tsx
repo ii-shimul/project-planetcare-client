@@ -4,12 +4,22 @@ import EventCard from "../../components/EventCard/EventCard";
 import EventCardSkeleton from "../../components/EventCard/EventCardSkeleton";
 import { Link } from "react-router-dom";
 
+export type Event = {
+	readonly _id: string;
+	title: string;
+	description: string;
+	location: string;
+	date: Date;
+	volunteers: Array<string>;
+};
+
 const Events = () => {
 	const axiosPublic = useAxios();
 	const { data: events, isLoading } = useQuery({
 		queryKey: ["eventsHome"],
 		queryFn: async () => {
 			const result = await axiosPublic.get("/events");
+			console.log(result.data);
 			return result.data;
 		},
 	});
@@ -26,7 +36,9 @@ const Events = () => {
 								.map((_, index) => <EventCardSkeleton key={index} />)
 						: events
 								.slice(0, 6)
-								.map((event) => <EventCard key={event._id} event={event} />)}
+								.map((event: Event) => (
+									<EventCard key={event._id} event={event} />
+								))}
 				</div>
 				<div className="text-center mt-8">
 					<Link to={"/events"} className="text-green-600 hover:underline">
