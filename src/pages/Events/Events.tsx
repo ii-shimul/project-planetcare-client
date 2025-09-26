@@ -1,10 +1,10 @@
-import React from "react";
 import useAxios from "../../hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import EventSkeleton from "./EventSkeleton";
 import useAuth from "../../hooks/useAuth";
 import { message } from "antd";
+import { Event } from "../Home/Events";
 
 const Events = () => {
 	const axiosPublic = useAxios();
@@ -23,7 +23,7 @@ const Events = () => {
 	});
 
 	// function for handling volunteer registration
-	const handleVolunteerRegistration = async (id) => {
+	const handleVolunteerRegistration = async (id: string) => {
 		if (!user?.email) {
 			message.error("You have to login first!");
 			return;
@@ -34,8 +34,8 @@ const Events = () => {
 			});
 			refetch();
 			message.success("Thank you for volunteering!");
-		} catch (error) {
-      console.log(error);
+		} catch (error: any) {
+			console.log(error);
 			message.error(`${error.response.data.message}`);
 		}
 	};
@@ -74,8 +74,8 @@ const Events = () => {
 				{isLoading
 					? Array(3)
 							.fill(null)
-							.map((_, index) => <EventSkeleton key={index} />)
-					: events.map((event) => (
+							.map((_, index: number) => <EventSkeleton key={index} index={index} />)
+					: events.map((event: Event) => (
 							<div
 								key={event._id}
 								className="flex flex-col bg-white p-6 rounded-xl shadow-md border border-gray-300 hover:shadow-lg transition"

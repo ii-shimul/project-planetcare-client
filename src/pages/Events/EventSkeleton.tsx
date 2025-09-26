@@ -1,7 +1,7 @@
-import React from "react";
 import { Card, Skeleton } from "antd";
+import React from "react";
 
-const EventSkeleton = ({ index }) => (
+const EventSkeleton: React.FC<{ index: number }> = ({ index }) => (
 	<Card
 		key={index}
 		bordered
