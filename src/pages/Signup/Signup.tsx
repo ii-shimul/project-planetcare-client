@@ -22,6 +22,13 @@ import useAxios from "../../hooks/useAxios";
 
 const { Title } = Typography;
 
+type SignupFormValues = {
+	email: string;
+	password: string;
+	role: string;
+	name: string;
+};
+
 const Signup = () => {
 	const { createUser, logInGoogle } = useAuth();
 	const axiosPublic = useAxios();
@@ -29,7 +36,7 @@ const Signup = () => {
 	const [loading, setLoading] = useState(false);
 
 	// handle sign up
-	const onFinish = async (data) => {
+	const onFinish = async (data: SignupFormValues) => {
 		setLoading(true);
 		try {
 			const user = await createUser(data.email, data.password, data.name);
@@ -42,7 +49,7 @@ const Signup = () => {
 			await axiosPublic.post("/users", userDb);
 			message.success(`Welcome ${user.displayName}`);
 			navigate("/");
-		} catch (error) {
+		} catch (error: any) {
 			message.error(`Error: ${error.message}`);
 		} finally {
 			setLoading(false);

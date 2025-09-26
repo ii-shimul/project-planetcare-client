@@ -16,6 +16,9 @@ import useAxios from "../../hooks/useAxios";
 
 const { Title } = Typography;
 
+type LoginFormValues = { email: string; password: string; remember?: boolean };
+
+
 const Login = () => {
 	const { logInGoogle, logIn } = useAuth();
 	const axiosPublic = useAxios();
@@ -23,13 +26,13 @@ const Login = () => {
 	const navigate = useNavigate();
 
 	// login with email and pass
-	const onFinish = async (values) => {
+	const onFinish = async (values: LoginFormValues) => {
 		setLoading(true);
 		try {
 			const result = await logIn(values.email, values.password);
 			message.success(`Welcome ${result.user.displayName}`);
 			navigate("/");
-		} catch (error) {
+		} catch (error: any) {
 			message.error(`Error: ${error.message}`);
 		} finally {
 			setLoading(false);
@@ -52,7 +55,7 @@ const Login = () => {
 			message.success(`Welcome ${user.displayName}`);
 			navigate("/");
 			setLoading(false);
-		} catch (error) {
+		} catch (error: any) {
 			console.log(error.message);
 			message.error("Something went wrong!");
 			setLoading(false);
