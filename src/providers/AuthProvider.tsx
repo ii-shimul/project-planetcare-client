@@ -9,19 +9,26 @@ import {
 	signInWithPopup,
 	signOut,
 	updateProfile,
+	User,
 } from "firebase/auth";
-import app from "../firebase/firebase.config"
-import { useEffect, useState } from "react";
+import app from "../firebase/firebase.config";
+import React, { useEffect, useState } from "react";
 import useAxios from "../hooks/useAxios";
 const auth = getAuth(app);
 
-const AuthProvider = ({ children }) => {
-	const [user, setUser] = useState(null);
-	const [loading, setLoading] = useState(true);
+const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+	children,
+}) => {
+	const [user, setUser] = useState<User | null>(null);
+	const [loading, setLoading] = useState<Boolean>(true);
 	const googleProvider = new GoogleAuthProvider();
 	const axiosPublic = useAxios();
 
-	const createUser = async (email, password, name = null) => {
+	const createUser = async (
+		email: string,
+		password: string,
+		name: string | null = null
+	) => {
 		setLoading(true);
 		try {
 			const userCred = await createUserWithEmailAndPassword(
@@ -36,8 +43,10 @@ const AuthProvider = ({ children }) => {
 				displayName: name,
 			});
 			return userDetails;
-		} catch (error) {
-			console.error(error.message);
+		} catch (error: unknown) {
+			console.error(
+				error instanceof Error ? error.message : "An unknown error occurred"
+			);
 		}
 	};
 
@@ -68,7 +77,7 @@ const AuthProvider = ({ children }) => {
 		return signOut(auth);
 	};
 
-	const logIn = (email, password) => {
+	const logIn = (email: string, password: string) => {
 		setLoading(true);
 		return signInWithEmailAndPassword(auth, email, password);
 	};
@@ -78,7 +87,7 @@ const AuthProvider = ({ children }) => {
 		return signInWithPopup(auth, googleProvider);
 	};
 
-	const resetPassword = (email) => {
+	const resetPassword = (email: string) => {
 		setLoading(true);
 		return sendPasswordResetEmail(auth, email);
 	};
