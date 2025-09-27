@@ -10,18 +10,33 @@ import {
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 
+interface DonationFormValues {
+	amount: number;
+	message?: string;
+}
+
+interface DonationData {
+	donorEmail: string;
+	amount: number;
+	message: string;
+	status: string;
+	paymentIntentId: string;
+	donatedAt: string;
+}
+
 const stripePromise = loadStripe(`${import.meta.env.VITE_PAYMENT_GATEWAY_PK}`);
 const { Text } = Typography;
 
 const DonationFormContent = () => {
-	const [form] = Form.useForm();
+	const [form] = Form.useForm<DonationFormValues>();
 	const { user } = useAuth();
 	const stripe = useStripe();
 	const elements = useElements();
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState<boolean>(false);
 	const [messageApi, contextHolder] = message.useMessage();
 	const axiosSecure = useAxiosSecure();
-	const handleSubmit = async (values) => {
+
+	const handleSubmit = async (values: DonationFormValues) => {
 		if (!stripe || !elements) return;
 
 		setLoading(true);
@@ -30,10 +45,18 @@ const DonationFormContent = () => {
 				amount: values.amount,
 			});
 
-			const clientSecret = data.clientSecret;
+			const clientSecret: string = data.clientSecret;
+			const cardElement = elements.getElement(CardElement);
+
+			if (!cardElement || !user?.email || !user?.displayName) {
+				messageApi.error("Missing required information");
+				setLoading(false);
+				return;
+			}
+
 			const result = await stripe.confirmCardPayment(clientSecret, {
 				payment_method: {
-					card: elements.getElement(CardElement),
+					card: cardElement,
 					billing_details: {
 						name: user.displayName,
 						email: user.email,
@@ -42,15 +65,15 @@ const DonationFormContent = () => {
 			});
 
 			if (result.error) {
-				messageApi.error(result.error.message);
-			} else if (result.paymentIntent.status === "succeeded") {
-				const donationData = {
+				messageApi.error(result.error.message || "Payment failed");
+			} else if (result.paymentIntent?.status === "succeeded") {
+				const donationData: DonationData = {
 					donorEmail: user.email,
 					amount: values.amount,
 					message: values.message || "",
-          status: "succeeded",
+					status: "succeeded",
 					paymentIntentId: result.paymentIntent.id,
-          donatedAt: new Date().toISOString()
+					donatedAt: new Date().toISOString(),
 				};
 				await axiosSecure.post("/donations", donationData);
 
@@ -102,7 +125,7 @@ const DonationFormContent = () => {
 							Card Details
 						</Text>
 					}
-					rules={[{ required: true }]} // Optional: Stripe handles validation
+					rules={[{ required: true }]}
 				>
 					<CardElement
 						options={{
