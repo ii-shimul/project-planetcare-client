@@ -7,9 +7,13 @@ import { message } from "antd";
 
 const EventDetails = () => {
 	const { id } = useParams();
-	const {user} = useAuth()
+	const { user } = useAuth();
 	const axiosPublic = useAxios();
-	const { data: event, isLoading, refetch } = useQuery({
+	const {
+		data: event,
+		isLoading,
+		refetch,
+	} = useQuery({
 		queryKey: ["event details"],
 		queryFn: async () => {
 			const result = await axiosPublic.get(`/events/${id}`);
@@ -19,16 +23,16 @@ const EventDetails = () => {
 	// function for handling volunteer registration
 	const handleVolunteerRegistration = async () => {
 		if (!user?.email) {
-					message.error("You have to login first!");
-					return;
-				}
+			message.error("You have to login first!");
+			return;
+		}
 		try {
 			await axiosPublic.patch(`/events/volunteer/${id}`, {
 				email: user.email,
 			});
 			refetch();
 			message.success("Thank you for volunteering!");
-		} catch (error) {
+		} catch (error: any) {
 			console.log(error);
 			message.error(`${error.response.data.message}`);
 		}
