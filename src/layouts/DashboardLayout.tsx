@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Layout, Menu, Typography } from "antd";
+import type { MenuProps } from "antd";
 import {
 	UserOutlined,
 	TeamOutlined,
@@ -14,10 +15,12 @@ import { Link, useLocation, Outlet } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
 
+type MenuItem = Required<MenuProps>["items"][number];
+
 const DashboardLayout = () => {
 	const location = useLocation();
 
-	const pathToKey = {
+	const pathToKey: { [key: string]: string } = {
 		"/dashboard": "overview",
 		"/dashboard/manage-users": "users",
 		"/dashboard/manage-events": "events",
@@ -25,9 +28,9 @@ const DashboardLayout = () => {
 		"/dashboard/reports": "reports",
 	};
 
-	const selectedKey = pathToKey[location.pathname] || "overview";
+	const selectedKey: string = pathToKey[location.pathname] || "overview";
 
-	const menuItems = [
+	const menuItems: MenuItem[] = [
 		{
 			key: "overview",
 			icon: <UserOutlined />,
@@ -54,9 +57,7 @@ const DashboardLayout = () => {
 			label: <Link to="/dashboard/reports">Reports & Analytics</Link>,
 		},
 		{
-			label: <hr className="m-0 p-0"/>,
-		},
-		{
+			key: "home",
 			icon: <HomeOutlined />,
 			label: <Link to="/">Back to Home</Link>,
 		},
@@ -105,8 +106,9 @@ const DashboardLayout = () => {
 				>
 					<Title level={3} style={{ margin: 0, lineHeight: "64px" }}>
 						{
-							menuItems.find((item) => item.key === selectedKey)?.label.props
-								.children
+							menuItems.find(
+								(item) => item && "key" in item && item.key === selectedKey
+							)?.label
 						}
 					</Title>
 				</Header>
