@@ -6,12 +6,15 @@ import {
 	DashboardOutlined,
 	LogoutOutlined,
 } from "@ant-design/icons";
-const links = (
+import { JSX } from "react";
+const links: JSX.Element = (
 	<>
 		<li>
 			<NavLink
 				to="/"
-				className={"inline-flex items-center h-10 px-3 text-base font-medium hover:text-primary"}
+				className={
+					"inline-flex items-center h-10 px-3 text-base font-medium hover:text-primary"
+				}
 			>
 				Home
 			</NavLink>
@@ -19,7 +22,9 @@ const links = (
 		<li>
 			<NavLink
 				to="/events"
-				className={"inline-flex items-center h-10 px-3 text-base font-medium hover:text-primary"}
+				className={
+					"inline-flex items-center h-10 px-3 text-base font-medium hover:text-primary"
+				}
 			>
 				Events
 			</NavLink>
@@ -27,7 +32,9 @@ const links = (
 		<li>
 			<NavLink
 				to="/donate"
-				className={"inline-flex items-center h-10 px-3 text-base font-medium hover:text-primary"}
+				className={
+					"inline-flex items-center h-10 px-3 text-base font-medium hover:text-primary"
+				}
 			>
 				Donate
 			</NavLink>
@@ -77,7 +84,7 @@ const NavBar = () => {
 					<Dropdown overlay={menu} trigger={["click"]}>
 						<Space>
 							<Avatar
-								size="medium"
+								size="default"
 								style={{ backgroundColor: "#003E30", cursor: "pointer" }}
 							>
 								{typeof user?.displayName === "string" && user.displayName[0]
