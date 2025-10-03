@@ -1,16 +1,15 @@
+import Header from "../../components/Header/Header";
 import DonationForm from "./DonationForm";
 const Donate = () => {
-
 	return (
 		<div className="bg-gray-50">
-			{/* Header */}
-			<div className="bg-green-700 text-white py-20 px-4 text-center">
-				<h1 className="text-5xl font-bold">💚 Support Our Mission</h1>
-				<p className="mt-4 text-lg max-w-2xl mx-auto">
+			<Header
+				title="💚 Support Our Mission"
+				subtitle="
 					Your contribution helps us organize events, spread awareness, and take
 					direct action for the planet.
-				</p>
-			</div>
+"
+			/>
 
 			{/* Donation Form */}
 			<div className="py-16 px-4 max-w-4xl mx-auto">

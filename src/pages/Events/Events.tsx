@@ -5,6 +5,7 @@ import EventSkeleton from "./EventSkeleton";
 import useAuth from "../../hooks/useAuth";
 import { message } from "antd";
 import { Event } from "../Home/Events";
+import Header from "../../components/Header/Header";
 
 const Events = () => {
 	const axiosPublic = useAxios();
@@ -42,14 +43,11 @@ const Events = () => {
 
 	return (
 		<div className="bg-gray-50">
-			<div className="bg-green-700 text-white py-20 px-4 text-center">
-				<h1 className="text-4xl md:text-5xl font-bold">🌱 PlanetCare Events</h1>
-				<p className="mt-4 text-lg max-w-2xl mx-auto">
-					Explore our upcoming events and take action to protect our planet.
-					Every small step matters.
-				</p>
-			</div>
-
+			<Header
+				title="🌱 PlanetCare Events"
+				subtitle="Explore our upcoming events and take action to protect our planet.
+					Every small step matters"
+			/>
 			<div className="py-12 px-4 max-w-4xl mx-auto text-center">
 				<h2 className="text-3xl font-bold text-green-800">Why Participate?</h2>
 				<p className="mt-4 text-gray-700">
@@ -74,7 +72,9 @@ const Events = () => {
 				{isLoading
 					? Array(3)
 							.fill(null)
-							.map((_, index: number) => <EventSkeleton key={index} index={index} />)
+							.map((_, index: number) => (
+								<EventSkeleton key={index} index={index} />
+							))
 					: events.map((event: Event) => (
 							<div
 								key={event._id}

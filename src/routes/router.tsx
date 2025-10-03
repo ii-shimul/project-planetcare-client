@@ -14,6 +14,7 @@ import ManageUsers from "../pages/DashboardComponents/Admin/ManageUsers";
 import ManageEvents from "../pages/DashboardComponents/Admin/ManageEvents";
 import Donations from "../pages/DashboardComponents/Admin/Donations";
 import Reports from "../pages/DashboardComponents/Admin/Reports";
+import Contact from "../pages/Contact/Contact";
 
 const router = createBrowserRouter([
 	{
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
 			{
 				path: "/events/:id",
 				element: <EventDetails />,
+			},
+			{
+				path: "/contact",
+				element: <Contact />,
 			},
 			{
 				path: "/donate",

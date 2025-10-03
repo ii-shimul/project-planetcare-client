@@ -39,6 +39,16 @@ const links: JSX.Element = (
 				Donate
 			</NavLink>
 		</li>
+		<li>
+			<NavLink
+				to="/contact"
+				className={
+					"inline-flex items-center h-10 px-3 text-base font-medium hover:text-primary"
+				}
+			>
+				Contact Us
+			</NavLink>
+		</li>
 	</>
 );
 
